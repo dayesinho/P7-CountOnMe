@@ -2,22 +2,32 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // Var:
+    /**
+    Variables:
+    */
     let calculate = Calculate()
     
-    // ViewDidLoad:
+    /**
+    ViewDidLoad:
+    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         calculate.displayAlertsDelegate = self
     }
     
-    // IBOutlet:
+    /**
+    IBOutlet:
+    */
+    
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
     
     
-    // MARK: - Action
+    /**
+    IBActions
+    */
     
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         for (index, numberButton) in numberButtons.enumerated() where sender == numberButton {
@@ -30,23 +40,27 @@ class ViewController: UIViewController {
          if let titleButton = sender.currentTitle {
             
             switch titleButton {
-            case "+": self.textView.text = self.calculate.plus()
+            case "+": textView.text = calculate.plus()
     
-            case "-": self.textView.text = self.calculate.minus()
+            case "-": textView.text = calculate.minus()
         
-            case "x": self.textView.text = self.calculate.multiply()
+            case "x": textView.text = calculate.multiply()
             
-            case "÷": self.textView.text = self.calculate.divide()
+            case "÷": textView.text = calculate.divide()
             
-            case "=": self.textView.text = self.calculate.calculTotal()
+            case "=": textView.text = calculate.calculTotal()
             
-            case "C": self.textView.text = self.calculate.erase()
+            case "C": textView.text = calculate.erase()
         default:
             break
             }
         }
     }
 }
+
+    /**
+    Extension to create the alert messages on the UI
+    */
 
 extension ViewController: DisplayAlertsDelegate {
     func showAlert(title: String, message: String) {

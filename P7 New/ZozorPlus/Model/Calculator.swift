@@ -14,13 +14,15 @@ protocol DisplayAlertsDelegate {
 
 class Calculate {
     
-    // Var:
+    /**
+     Variables:
+    */
     
     var stringNumbers: [String] = [String()]
     var operators: [String] = ["+"]
     var index = 0
-    var textView: UITextView!
     var displayAlertsDelegate: DisplayAlertsDelegate?
+    
     
     var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
@@ -45,9 +47,10 @@ class Calculate {
         }
         return true
     }
-
     
-    // Methods:
+    /**
+     Methods to add strings for operators and erase the content
+    */
     
     func plus() -> String {
         if canAddOperator {
@@ -83,16 +86,75 @@ class Calculate {
     
     func clear() {
         stringNumbers = [String()]
+        operators = ["+"]
         index = 0
     }
     
     func erase() -> String {
-        if canAddOperator {
         clear()
+        return ""
     }
-    return "0"
-}
+
+    /**
+     Method for priority calculation when user is multiplying or dividing // Alert message added for the division by zero
+     */
     
+    func priorityCalculation() {
+
+        let priorityOperators = ["x", "÷"]
+        var result: Double = 0
+        var index = 0
+        
+        while index < stringNumbers.count-1 {
+            
+            if var firstNumber = Double(stringNumbers[index]) {
+                while priorityOperators.contains(operators[index+1]) {
+                    if let secondNumber = Double(stringNumbers[index+1]) {
+                        if operators[index+1] == "x" {
+                            result = firstNumber * secondNumber
+                        } else if operators[index+1] == "÷" && secondNumber != 0 {
+                            result = firstNumber / secondNumber
+                        } else {
+                            displayAlertsDelegate?.showAlert(title: "Zéro", message: "Impossible de diviser par zéro")
+                            clear()
+                            return
+                        }
+                        stringNumbers[index] = String(result)
+                        firstNumber = result
+                        stringNumbers.remove(at: index+1)
+                        operators.remove(at: index+1)
+                        if index == stringNumbers.count-1 {
+                            return
+                        }
+                    }
+                }
+                index += 1
+            }
+        }
+    }
+    
+    /**
+     Method that add decimals for the calculation
+     */
+//    func addDecimals() -> String {
+//
+//        let index = 0
+//        let firstNumber = Int(stringNumbers[index])
+//        let secondNumber = Int(stringNumbers[index+1])
+//        let result: Int = firstNumber! / secondNumber!
+//        let division: Double = firstNumber! / secondNumber!
+//
+//        if division % result == 0 {
+//            return String(format: "%.0f", result)
+//        } else {
+//            return String(format: "%.4f", result)
+//        }
+//    }
+
+    /**
+    Method to add new number on the calculator
+    */
+                
     func addNewNumber(_ newNumber: Int) -> String {
         if let stringNumber = stringNumbers.last {
             var stringNumberMutable = stringNumber
@@ -101,34 +163,38 @@ class Calculate {
         }
         return updateDisplay()
     }
-            
+    
+    /**
+     Method to calculate the total. Only for additions and subtractions
+    */
+    
     func calculTotal() -> String {
+        
         if !isExpressionCorrect {
             return ""
         }
         
-        var total = 0
+        priorityCalculation()
+        var total : Double = 0
         for (index, stringNumber) in stringNumbers.enumerated() {
-            if let number = Int(stringNumber) {
+            if let number = Double(stringNumber) {
                 
-                switch operators[index] {
+                if operators[index] == "+" {
+                    total += number
                     
-                case "+": total += number
-                
-                case "-": total -= number
-                
-                case "x": total *= number
-                
-                case "÷": total /= number
+                } else if operators[index] == "-" {
+                total -= number
 
-            default:
-                    break
                 }
             }
         }
         clear()
-        return String(total)
+        return String(format: "%.0f", total)
     }
+    
+    /**
+     Method to update the display of the calculator
+    */
     
     func updateDisplay() -> String {
         var text = ""
