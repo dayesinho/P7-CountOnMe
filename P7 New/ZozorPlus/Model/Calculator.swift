@@ -23,6 +23,9 @@ class Calculate {
     var index = 0
     var displayAlertsDelegate: DisplayAlertsDelegate?
     
+    /**
+    Variable to detect if the user is entering an expression correct
+    */
     
     var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
@@ -37,6 +40,10 @@ class Calculate {
         }
         return true
     }
+    
+    /**
+    Variable to enter a new operator in the calculator
+    */
     
     var canAddOperator: Bool {
         if let stringNumber = stringNumbers.last {
@@ -132,24 +139,6 @@ class Calculate {
             }
         }
     }
-    
-    /**
-     Method that add decimals for the calculation
-     */
-//    func addDecimals() -> String {
-//
-//        let index = 0
-//        let firstNumber = Int(stringNumbers[index])
-//        let secondNumber = Int(stringNumbers[index+1])
-//        let result: Int = firstNumber! / secondNumber!
-//        let division: Double = firstNumber! / secondNumber!
-//
-//        if division % result == 0 {
-//            return String(format: "%.0f", result)
-//        } else {
-//            return String(format: "%.4f", result)
-//        }
-//    }
 
     /**
     Method to add new number on the calculator
@@ -189,7 +178,7 @@ class Calculate {
             }
         }
         clear()
-        return String(format: "%.0f", total)
+        return String(format: "%.2f", total)
     }
     
     /**

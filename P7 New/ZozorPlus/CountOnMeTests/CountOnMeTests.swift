@@ -72,7 +72,7 @@ class CalculTests: XCTestCase {
         let _ = calculate.divide()
         let _ = calculate.addNewNumber(3)
         
-        XCTAssertEqual(calculate.calculTotal(), "3.3333")
+        XCTAssertEqual(calculate.calculTotal(), "3.33")
     }
     
     func testGivenElementToCalculateIs1Plus_WhenCalculating_ThenShowAlertExpressionIsIncorrect() {
