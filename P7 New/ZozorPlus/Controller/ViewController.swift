@@ -29,13 +29,13 @@ class ViewController: UIViewController {
     IBActions
     */
     
-    @IBAction func tappedNumberButton(_ sender: UIButton) {
+    @IBAction private func tappedNumberButton(_ sender: UIButton) {
         for (index, numberButton) in numberButtons.enumerated() where sender == numberButton {
             textView.text = calculate.addNewNumber(index)
         }
     }
     
-    @IBAction func actionButtons(_ sender: UIButton) {
+    @IBAction private func actionButtons(_ sender: UIButton) {
         
          if let titleButton = sender.currentTitle {
             
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     */
 
 extension ViewController: DisplayAlertsDelegate {
-    func showAlert(title: String, message: String) {
+    internal func showAlert(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alertVC, animated: true)

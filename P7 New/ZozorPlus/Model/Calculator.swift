@@ -27,7 +27,7 @@ class Calculate {
     Variable to detect if the user is entering an expression correct
     */
     
-    var isExpressionCorrect: Bool {
+    internal var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
             if stringNumber.isEmpty {
                 if stringNumbers.count == 1 {
@@ -45,7 +45,7 @@ class Calculate {
     Variable to enter a new operator in the calculator
     */
     
-    var canAddOperator: Bool {
+    internal var canAddOperator: Bool {
         if let stringNumber = stringNumbers.last {
             if stringNumber.isEmpty {
                 displayAlertsDelegate?.showAlert(title: "Zéro", message: "Expression incorrecte !")
@@ -59,7 +59,7 @@ class Calculate {
      Methods to add strings for operators and erase the content
     */
     
-    func plus() -> String {
+    internal func plus() -> String {
         if canAddOperator {
             operators.append("+")
             stringNumbers.append("")
@@ -67,7 +67,7 @@ class Calculate {
         return updateDisplay()
     }
     
-    func minus() -> String {
+    internal func minus() -> String {
         if canAddOperator {
             operators.append("-")
             stringNumbers.append("")
@@ -75,7 +75,7 @@ class Calculate {
         return updateDisplay()
     }
     
-    func multiply() -> String {
+    internal func multiply() -> String {
         if canAddOperator {
             operators.append("x")
             stringNumbers.append("")
@@ -83,7 +83,7 @@ class Calculate {
         return updateDisplay()
     }
     
-    func divide() -> String {
+    internal func divide() -> String {
         if canAddOperator {
             operators.append("÷")
             stringNumbers.append("")
@@ -91,13 +91,13 @@ class Calculate {
         return updateDisplay()
     }
     
-    func clear() {
+    internal func clear() {
         stringNumbers = [String()]
         operators = ["+"]
         index = 0
     }
     
-    func erase() -> String {
+    internal func erase() -> String {
         clear()
         return ""
     }
@@ -106,7 +106,7 @@ class Calculate {
      Method for priority calculation when user is multiplying or dividing // Alert message added for the division by zero
      */
     
-    func priorityCalculation() {
+    private func priorityCalculation() {
 
         let priorityOperators = ["x", "÷"]
         var result: Double = 0
@@ -144,7 +144,7 @@ class Calculate {
     Method to add new number on the calculator
     */
                 
-    func addNewNumber(_ newNumber: Int) -> String {
+    internal func addNewNumber(_ newNumber: Int) -> String {
         if let stringNumber = stringNumbers.last {
             var stringNumberMutable = stringNumber
             stringNumberMutable += "\(newNumber)"
@@ -157,7 +157,7 @@ class Calculate {
      Method to calculate the total. Only for additions and subtractions
     */
     
-    func calculTotal() -> String {
+    internal func calculTotal() -> String {
         
         if !isExpressionCorrect {
             return ""
@@ -185,7 +185,7 @@ class Calculate {
      Method to update the display of the calculator
     */
     
-    func updateDisplay() -> String {
+    internal func updateDisplay() -> String {
         var text = ""
         
         for (index, stringNumber) in stringNumbers.enumerated() {

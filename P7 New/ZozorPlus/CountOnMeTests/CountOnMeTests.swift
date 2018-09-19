@@ -66,21 +66,17 @@ class CalculTests: XCTestCase {
         XCTAssertEqual(calculate.calculTotal(), "32.00")
     }
     
-    func testAddDecimals_WhenResultOfCalculationWillBeDecimals_ThenResultWillShowDecimals() {
+    func testGivenElementToErase_WhenErasing_ThenTextShowsNil() {
         
-        let _ = calculate.addNewNumber(10)
-        let _ = calculate.divide()
-        let _ = calculate.addNewNumber(3)
-        
-        XCTAssertEqual(calculate.calculTotal(), "3.33")
+        XCTAssertEqual(calculate.erase(), "")
     }
-    
-    func testGivenElementToCalculateIs1Plus_WhenCalculating_ThenShowAlertExpressionIsIncorrect() {
         
+    func testGivenElementToCalculateIs1Plus_WhenCalculating_ThenShowReturn() {
+    
         let _ = calculate.addNewNumber(1)
         let _ = calculate.plus()
-
-        XCTAssertFalse(calculate.isExpressionCorrect)
+        
+        XCTAssertEqual(calculate.calculTotal(), "")
     }
     
     func testGivenElementToCalculateReturn_WhenCalculating_ThenReturnTheResult() {
@@ -94,15 +90,18 @@ class CalculTests: XCTestCase {
         XCTAssertEqual(calculate.calculTotal(), "0.00")
     }
     
-    func testGivenElementToErase_WhenErasing_ThenTextShowsNil() {
-        
-        XCTAssertEqual(calculate.erase(), "")
-    }
-    
     func testGivenElementToCalculateIsNil_WhenCalculating_ThenShowAlertExpressionIsIncorrect() {
         
         let _ = calculate.stringNumbers.isEmpty
     
+        XCTAssertFalse(calculate.isExpressionCorrect)
+    }
+    
+    func testGivenElementToCalculateIs1Plus_WhenCalculating_ThenShowAlertExpressionIsIncorrect() {
+        
+        let _ = calculate.addNewNumber(1)
+        let _ = calculate.plus()
+        
         XCTAssertFalse(calculate.isExpressionCorrect)
     }
     
